@@ -3,7 +3,7 @@ import asyncio
 from fastapi import APIRouter
 
 from src.schemas import PriceSchema, SomeArticulsSchema, SomePricesSchema
-from src.ozon_parser_service import get_ozon_products_prices_by_articuls
+from src.marketplace_price_parser import get_ozon_products_prices_by_articuls
 
 router = APIRouter()
 
