@@ -1,5 +1,4 @@
 import re
-import time
 
 import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
@@ -27,7 +26,7 @@ class MarketplacePriceParser:
             price_element_xpath (str): Строка типа XPATH элемента, 
             в котором находится информация о товаре
         '''
-        self.driver: uc.Chrome = uc.Chrome(use_subprocess=False)
+        self.driver: uc.Chrome = uc.Chrome(use_subprocess=True)
         self.product_url = product_url
         self.articuls = articuls
         self.price_element_xpath = price_element_xpath

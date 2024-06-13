@@ -1,13 +1,9 @@
 from pydantic import BaseModel
 
 
-class PriceSchema(BaseModel):
-    price: float
+class PricesReturnSchema(BaseModel):
+    prices: dict[int, float]
 
 
-class SomePricesSchema(BaseModel):
-    prices: list[float]
-
-
-class SomeArticulsSchema(BaseModel):
+class ArticulsInputSchema(BaseModel):
     articuls: list[int]

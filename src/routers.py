@@ -2,31 +2,32 @@ import asyncio
 
 from fastapi import APIRouter
 
-from src.schemas import PriceSchema, SomeArticulsSchema, SomePricesSchema
-from src.marketplace_price_parser import get_ozon_products_prices_by_articuls
+from src.schemas import (PricesReturnSchema, ArticulsInputSchema)
+from src.marketplace_price_parser import (
+    ozon_price_parser, wildberries_price_parser)
 
 router = APIRouter()
 
 
-@router.get(
-    '/price',
-    name='get price',
-    response_model=PriceSchema,
+@router.post(
+    '/ozon',
+    name='get ozon products prices',
+    response_model=PricesReturnSchema,
 )
-async def get_product_price_by_articul_router(articul: int):
-    prices = get_ozon_products_prices_by_articuls(articul)
-    price = prices[0]
+async def get_prices_for_ozon_products_handler(articuls_schema: ArticulsInputSchema):
+    articuls = articuls_schema.articuls
+    prices = ozon_price_parser(*articuls)
 
-    return PriceSchema(price=price)
+    return PricesReturnSchema(prices=prices)
 
 
 @router.post(
-    '/price',
-    name='get some prices',
-    response_model=SomePricesSchema,
+    '/wildberries',
+    name='get wildberries products prices',
+    response_model=PricesReturnSchema,
 )
-async def get_products_prices_by_articuls_list(articuls_schema: SomeArticulsSchema):
+async def get_prices_for_ozon_products_handler(articuls_schema: ArticulsInputSchema):
     articuls = articuls_schema.articuls
-    prices = get_ozon_products_prices_by_articuls(*articuls)
+    prices = wildberries_price_parser(*articuls)
 
-    return SomePricesSchema(prices=prices)
+    return PricesReturnSchema(prices=prices)
